@@ -1,0 +1,39 @@
+:root{
+    --rowNbr : 5;
+}
+body{
+    background-color: green;
+}
+
+.whackAMole{
+    border:1px solid black;
+
+    &__score{
+        background-color: blue;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    &__game{
+        display: grid;
+        grid-template-columns: repeat(var(--rowNbr),1fr);
+        gap:1em;
+    }
+
+    &__hole{
+        background-color:darkblue;
+        width: 5em;
+        height: 5em;
+        border-radius: 2.5em;
+        align-self: center;
+        justify-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &--actif{
+            background-color: red;
+        }
+    }
+}
