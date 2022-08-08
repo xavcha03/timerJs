@@ -7,6 +7,7 @@ export class WhackAMole {
 		//Initialisation
 		this.score = 0;
 		this.scoreElt = null; //node d'affichage du score
+		this.gameZone = null;
 
 		//Création des éléments de L'ui
 		//Ajout de la feuille de style du jeu
@@ -22,11 +23,26 @@ export class WhackAMole {
 
 	//Démmarrage du jeu
 	gameStart() {
-		this.activeHole();
+		setInterval(() => this.activeHole(), 1500);
 	}
 
 	//active un trou
-	activeHole
+	activeHole() {
+		let actifHole = this.holesList[this.randomHole()];
+		actifHole.classList.add("whackAMole__hole--actif");
+		//Apres  un certain temps on désactive le trou
+		setTimeout(() => this.desableHole(actifHole), 1500);
+	}
+
+	//desactive un trou
+	desableHole(actifHole) {
+		actifHole.classList.remove("whackAMole__hole--actif");
+	}
+
+	//selection d'un trou aléatoirement
+	randomHole() {
+		return Math.floor(Math.random() * this.holesList.length);
+	}
 
 	//Ajout la feuille de style du jeu
 	addGameStyle() {
@@ -64,11 +80,13 @@ export class WhackAMole {
 		//Placement de la zone dans le DOM
 		this.destinationNode.appendChild(this.gameZone);
 		this.holesList = document.querySelector("#game").children;
-		console.log(this.holesList);
 	}
 
 	holeClickEvent(e) {
-		console.log(e.target);
+		let clickedHole = e.target;
+		if (clickedHole.classList.contains("whackAMole__hole--actif")) {
+			this.addScore(1);
+		}
 	}
 
 	//crée la zone d'affichage du score et la place dans le html
